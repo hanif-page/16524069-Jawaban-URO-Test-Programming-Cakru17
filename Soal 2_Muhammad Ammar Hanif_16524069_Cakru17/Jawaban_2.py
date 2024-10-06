@@ -2,7 +2,11 @@
 # https://dillinger.io/
 
 import random
+from time import sleep
+from modules.clearAndLoading import Loading, Typing
 
+# loading animation object
+clearLoad = Loading(0, 3, 0.3)
 
 class Robot:
     def __init__(self, name, health, attackPowerRange):
@@ -12,6 +16,7 @@ class Robot:
 
     def showSpecification(self):
         # code
+        clearLoad.loadingAnimation()
 
         print("Specs:")
 
@@ -19,6 +24,7 @@ class Robot:
 
     def upgradeShield(self):
         # code
+        clearLoad.loadingAnimation()
 
         self.health += 5
 
@@ -26,6 +32,7 @@ class Robot:
 
     def increaseStrenth(self):
         # code
+        clearLoad.loadingAnimation()
 
         self.attackPowerRange[0] += 3
         self.attackPowerRange[1] += 2
@@ -39,14 +46,13 @@ class Battle:
         self.robot2 = robot2
 
     def start_fight(self):
-        # code
+        clearLoad.loadingAnimation()
 
         # assume robot1 attack first
         print("Fight Start!")
+        print()
 
         while (self.robot1.health > 0 and self.robot2.health > 0):
-
-            print("NIGGA")
 
             # robot1 attack robot2
             attack1 = random.randrange(self.robot1.attackPowerRange[0], self.robot1.attackPowerRange[1])
@@ -82,7 +88,7 @@ class Game:
 
     @staticmethod
     def add_robot():
-        # code
+        clearLoad.loadingAnimation()
 
         robotName = input("Robot Name : ")
         robotHealth = int(input("Robot Health : "))
@@ -92,21 +98,26 @@ class Game:
         # saving robot data
         robotsList.append(Robot(robotName, robotHealth, [robotMinAttack, robotMaxAttack]))
 
-        print(robotsList)
+        # print(robotsList)
 
-        print(f"Robot {robotName} added!")
+        print(f"\nRobot {robotName} added!")
+
+        sleep(1)        
 
         Game().start_game()
 
     @staticmethod
     def display_robot():
 
+        clearLoad.loadingAnimation()
+
         if len(robotsList) == 0:
             print("Please add new robot first!")
 
+            sleep(1)
+
             Game().start_game()
         else:
-            # print(len(robotsList))
             for i in range(0, len(robotsList)):
                 # print(i)
                 print(f"{i+1}. Robot Name: {robotsList[i].name}\nRobot Health: {robotsList[i].health}\nRobot Damage Attack Range: {robotsList[i].attackPowerRange[0]}-{robotsList[i].attackPowerRange[1]}")
@@ -114,7 +125,7 @@ class Game:
 
 
     def start_game(self):
-        # code
+        clearLoad.loadingAnimation()
 
         frontScreen = """
         Battle of Robot by Hanif
@@ -143,7 +154,12 @@ class Game:
         elif choice == 3:
             
             if len(robotsList) < 2:
+                clearLoad.loadingAnimation()
+
                 print("Please add more than one robot first!")
+
+                sleep(1)
+
                 Game().start_game()
             else:
                 self.display_robot()
@@ -160,13 +176,15 @@ class Game:
         else:
             print("Please only input the available option!")
             print()
+            sleep(1)
             Game().start_game()
 
 # for robot in robotsList:
 #     if robot.name == "B":
 #         print(robot.name)
 
-robotsList = [Robot("Putra", 100, [10, 15]), Robot("Jalinda", 200, [10, 12])]
+# robotsList = [Robot("Putra", 100, [10, 15]), Robot("Jalinda", 200, [10, 12])]
+robotsList = []
 
 if __name__ == "__main__":
     Game().start_game()
